@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model users{
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  gender    UserGender?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  preferences user_preferences?
+  transactions transactions[]
+  saving_goals saving_goals[]
+  categories categories[]
+  last_singed_in_at DateTime?
+}
+
+model categories {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  types   String
+  color String
+  user_id String?
+  user   users? @relation(fields: [user_id], references: [id])
+  transactions transactions[]
+
+}
+model saving_goals {
+
+	  id       String   @id @default(cuid())
+  	user_id	 String
+    user   users  @relation(fields: [user_id], references: [id])
+    name     String	
+    target_amount	 Float
+    current_amount	 Float  @default(0)
+    target_date	 DateTime
+    description	 String?
+    created_at	 DateTime @default(now())
+    updated_at  DateTime @updatedAt
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model transactions {
+  id                 String   @id @default(cuid())
+  user_id            String
+  user               users    @relation(fields: [user_id], references: [id])
+  type               TransactionType
+  amount             Float
+  category_id        String?
+  category           categories? @relation(fields: [category_id], references: [id])
+  description        String?
+  is_recurring       Boolean  @default(false)
+  recurring_interval String?
+  transaction_date   DateTime
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model user_preferences {
+ 	id	  String   @id @default(cuid()) 
+  user_id	 String  @unique
+  user   users  @relation(fields: [user_id], references: [id])
+  monthly_income Float	
+  currency	 String
+  savings_rate	   Float
+  budget_allocation	   Json
+  created_at	 DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
