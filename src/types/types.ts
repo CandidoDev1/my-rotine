@@ -7,7 +7,7 @@ export const TransactionSchema = z.object({
   user_id: z.string(),
   type: z.enum(['income', 'expense']), // alinhar com enum Prisma
   amount: z.number().positive(),
-  category_id: z.string().nullable(), // chave estrangeira
+  category_id: z.number().nullable(), // chave estrangeira
   description: z.string().optional(),
   is_recurring: z.boolean().default(false),
   recurring_interval: z.string().optional(),

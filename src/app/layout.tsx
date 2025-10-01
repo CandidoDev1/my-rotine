@@ -1,20 +1,22 @@
 import "./globals.css";
-import  Header  from "@/components/header";
 import { Metadata } from "next"
+import "./globals.css";
+
+import Providers from "@/components/Providers"; // wrapper client
 
 export const metadata: Metadata = {
-    title: 'CONECTA.AO',
-    icons: '/material/link.png',
-    description: 'Transforme o seu negócio com soluções tecnológicas personalizadas',
+    title: 'MyRotine - Gerencie suas finanças pessoais com facilidade',
+    icons: '/img/',
+    description: 'Gerencie suas finanças pessoais com facilidade',
     openGraph: {
-        title: 'CONECTA.AO',
-        description: 'Transforme o seu negócio com soluções tecnológicas personalizadas',
+        title: 'MyRotine',
+        description: 'Gerencie suas finanças pessoais com facilidade',
         images: [
             {
-                url: '/material/link.png',
+                url: '/img/',
                 width: 800,
                 height: 600,
-                alt: 'Logo da CONECTA.AO'
+                alt: 'Logo da MyRotine'
             }
         ]
     },
@@ -27,21 +29,19 @@ export const metadata: Metadata = {
             follow: true
         }
     }
-}
+} 
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        <Header/>
-        {children}
+    <html lang="pt">
+      <body>
+        <Providers>
+          <main className="pt-14">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );
 }
+
