@@ -5,15 +5,16 @@ import "./globals.css";
 import Providers from "@/components/Providers"; // wrapper client
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://my-rotine.vercel.app'),
     title: 'MyRotine - Gerencie suas finanças pessoais com facilidade',
-    icons: '/img/',
+    icons: '../img/icon.png',
     description: 'Gerencie suas finanças pessoais com facilidade',
     openGraph: {
         title: 'MyRotine',
         description: 'Gerencie suas finanças pessoais com facilidade',
         images: [
             {
-                url: '/img/',
+                url: '../img/icon.png',
                 width: 800,
                 height: 600,
                 alt: 'Logo da MyRotine'
